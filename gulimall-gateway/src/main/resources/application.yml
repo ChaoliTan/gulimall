@@ -2,14 +2,14 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: test_route
-          uri: https://www.google.com/
-          predicates:
-          - Query=url,google
-        - id: qq_route
-          uri: https://www.twitter.com
-          predicates:
-            - Query=url, twitter
+#        - id: test_route
+#          uri: https://www.google.com/
+#          predicates:
+#          - Query=url,google
+#        - id: qq_route
+#          uri: https://www.twitter.com
+#          predicates:
+#            - Query=url, twitter
 
         - id: product_route
           uri: lb://gulimall-product
@@ -24,6 +24,20 @@ spring:
             - Path=/api/thirdparty/**
           filters:
             - RewritePath=/api/thirdparty(?<segment>.*),/$\{segment}
+
+        - id: member_route
+          uri: lb://gulimall-member
+          predicates:
+            - Path=/api/member/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
+        - id: ware_route
+          uri: lb://gulimall-warehouse
+          predicates:
+            - Path=/api/ware/**
+          filters:
+            - RewritePath=/api/ware/(?<segment>.*),/warehouse/$\{segment}
 
         - id: admin_route
           uri: lb://renren-fast

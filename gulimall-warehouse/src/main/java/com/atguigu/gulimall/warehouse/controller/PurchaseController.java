@@ -1,19 +1,15 @@
 package com.atguigu.gulimall.warehouse.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.atguigu.gulimall.warehouse.entity.PurchaseEntity;
-import com.atguigu.gulimall.warehouse.service.PurchaseService;
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.common.utils.R;
+import com.atguigu.gulimall.warehouse.entity.PurchaseEntity;
+import com.atguigu.gulimall.warehouse.service.PurchaseService;
+import com.atguigu.gulimall.warehouse.vo.MergeVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.Map;
 
 
 
@@ -29,6 +25,18 @@ import com.atguigu.common.utils.R;
 public class PurchaseController {
     @Autowired
     private PurchaseService purchaseService;
+
+
+
+    // /ware/purchase/unreceive/list
+    @RequestMapping("/unreceive/list")
+    //@RequiresPermissions("warehouse:purchase:list")
+    public R unreceiveList(@RequestParam Map<String, Object> params){
+        PageUtils page = purchaseService.queryPageUnreceive(params);
+
+        return R.ok().put("page", page);
+    }
+
 
     /**
      * 列表
