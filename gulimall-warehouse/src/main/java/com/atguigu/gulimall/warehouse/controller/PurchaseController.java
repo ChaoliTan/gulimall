@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 
@@ -26,7 +28,26 @@ public class PurchaseController {
     @Autowired
     private PurchaseService purchaseService;
 
+    /**
+     * 领取采购单
+     * @return
+     */
+    @PostMapping("/received")
+    public R received(@RequestBody List<Long> ids){
 
+        purchaseService.received(ids);
+
+        return R.ok();
+    }
+
+    // /ware/purchase/merge
+    @RequestMapping("/merge")
+    //@RequiresPermissions("warehouse:purchase:list")
+    public R merge(@RequestBody MergeVo mergeVo){
+        purchaseService.mergePurchase(mergeVo);
+
+        return R.ok();
+    }
 
     // /ware/purchase/unreceive/list
     @RequestMapping("/unreceive/list")
@@ -67,6 +88,8 @@ public class PurchaseController {
     @RequestMapping("/save")
     //@RequiresPermissions("warehouse:purchase:save")
     public R save(@RequestBody PurchaseEntity purchase){
+        purchase.setUpdateTime(new Date());
+        purchase.setCreateTime(new Date());
 		purchaseService.save(purchase);
 
         return R.ok();
