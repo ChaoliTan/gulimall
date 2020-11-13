@@ -5,6 +5,7 @@ import com.atguigu.common.utils.R;
 import com.atguigu.gulimall.warehouse.entity.PurchaseEntity;
 import com.atguigu.gulimall.warehouse.service.PurchaseService;
 import com.atguigu.gulimall.warehouse.vo.MergeVo;
+import com.atguigu.gulimall.warehouse.vo.PurchaseDoneVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +28,15 @@ import java.util.Map;
 public class PurchaseController {
     @Autowired
     private PurchaseService purchaseService;
+
+    ///ware/purchase/done
+    @PostMapping("/done")
+    public R finish(@RequestBody PurchaseDoneVo doneVo){
+
+        purchaseService.done(doneVo);
+
+        return R.ok();
+    }
 
     /**
      * 领取采购单

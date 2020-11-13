@@ -1,6 +1,7 @@
 package com.atguigu.gulimall.warehouse.service;
 
 import com.atguigu.gulimall.warehouse.vo.MergeVo;
+import com.atguigu.gulimall.warehouse.vo.PurchaseDoneVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.gulimall.warehouse.entity.PurchaseEntity;
@@ -24,5 +25,7 @@ public interface PurchaseService extends IService<PurchaseEntity> {
     void mergePurchase(MergeVo mergeVo);
 
     void received(List<Long> ids);
+
+    void done(PurchaseDoneVo doneVo);
 }
 
