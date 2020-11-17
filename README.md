@@ -5,8 +5,9 @@
 
 ### 1.Concepts of Distributed System
 
-　　　　Microservice, Registry Center, Configuration Center, Remote Call, Feign, Gateway
-
+　　　　Microservice, Registry Center (Nacos), Configuration Center (Nacos), Remote Call, Feign, Gateway
+      Note:
+        Nacos: Dynamic Naming and Configuration Service, similar to Consul/Eureka/Zookeeper.
 ### 2.Development Tools
 
 　　　　SpringBoot2.0, SpringCloud, Mybatis-Plus, Vue, Element-UI, AliCloud OSS
@@ -22,6 +23,12 @@
 　　　  Status Enumeration, Service Status Code, Value Object, Transfer Object, and Plain Object, Logic Delete
 
 　　　  Lombok：@Data、@Slf4j
+
+
+## Advanced Part
+
+### gulimall-search (Elasticsearch)
+1. 
 
 ## Summary for the advanced part
 
