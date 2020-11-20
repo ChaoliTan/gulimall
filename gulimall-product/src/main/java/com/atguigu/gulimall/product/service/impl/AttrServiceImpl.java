@@ -255,4 +255,13 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         return pageUtils;
     }
 
+    @Override
+    public List<Long> selectSearchAttrs(List<Long> attrIds) {
+        /**
+         * SELECT attr_id FROM gulimall_pms.pms_attr WHERE attr_id IN (?) AND search_type = 1
+         */
+
+         return baseMapper.selectSearchAttrId(attrIds);
+    }
+
 }

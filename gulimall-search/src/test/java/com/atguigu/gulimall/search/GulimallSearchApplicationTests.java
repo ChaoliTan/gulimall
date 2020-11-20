@@ -52,6 +52,49 @@ public class GulimallSearchApplicationTests {
         private String state;
     }
 
+    /**
+     * 1. Easy to search {
+     *     skuId: 1
+     *     spuId: 11
+     *     skuTitle: huaweiXX
+     *     price: 998
+     *     saleCount:99
+     *     attrs:[
+     *          {},
+     *          {},
+     *          {}
+     *          ]
+     * }
+     *
+     * 冗余：
+     *  100 million * 20 = 100 million * 2kb = 2G
+     * 2.
+     *     sku index {
+     *         skuId: 1
+     *         spuId: 11
+     *         xxxx
+     *     }
+     *
+     *     attr index {
+     *          spuId: 11
+     *          attrs:[
+     *          {}
+     *          {}
+     *          {}
+     *          ]
+     *     }
+     *
+     *     Search xiaomi: food, cell, applicances
+     *     10 000, 4 000 spu
+     *     分步，4 000 spu对应对所有可能属性
+     *     esClient： spuId: [4000 spuid] 4000*8=32000byte=32kb
+     *
+     *     32kb*10000=320mb
+     *
+     *
+     * @throws IOException
+     */
+
     @Test
     public void searchData() throws IOException {
         // 1. Create search request
