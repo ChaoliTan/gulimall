@@ -66,6 +66,15 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  *      2） 简单配置redis的host等信息
  *      3） 使用springboot自动配置好的StringRedisTemplate来操作redis
  *          redis-》Map：存放数据key，数据值value
+ *
+ *  7。 整合redisson作为分布式锁等功能框架
+ *      1） 引入依赖
+*          <dependency>
+ *             <groupId>org.redisson</groupId>
+ *             <artifactId>redisson</artifactId>
+ *             <version>3.14.0</version>
+ *         </dependency>
+ *      2）配置redisson
  */
 @EnableFeignClients(basePackages = "com.atguigu.gulimall.product.feign")
 @EnableDiscoveryClient
