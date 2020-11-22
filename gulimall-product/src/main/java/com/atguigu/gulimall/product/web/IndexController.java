@@ -41,4 +41,10 @@ public class IndexController {
         return catelogJson;
     }
 
+    @ResponseBody
+    @GetMapping("/hello")
+    public String hello() {
+        return "hello";
+    }
+
 }
