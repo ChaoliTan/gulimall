@@ -61,6 +61,11 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  *  4)  页面修改不重启服务器实时更新
  *      1） 引入dev-tools
  *      2) 修改完页面 shift + command + f9, 重新编译文件； 代码配置，推荐重启
+ *  6. 整合redis
+ *      1） 引入data-redis-starter
+ *      2） 简单配置redis的host等信息
+ *      3） 使用springboot自动配置好的StringRedisTemplate来操作redis
+ *          redis-》Map：存放数据key，数据值value
  */
 @EnableFeignClients(basePackages = "com.atguigu.gulimall.product.feign")
 @EnableDiscoveryClient

@@ -18,6 +18,9 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
   thymeleaf:
     cache: false
+  redis:
+    host: localhost
+    port: 6379
 
 #  resources:
 #    static-locations: classpath:/
@@ -35,7 +38,6 @@ server:
 logging:
   level:
     com.atguigu.gulimall: error
-
 
 
 
