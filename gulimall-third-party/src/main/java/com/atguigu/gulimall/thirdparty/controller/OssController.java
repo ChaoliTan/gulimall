@@ -39,7 +39,7 @@ public class OssController {
         // Set the URL of the server to which an upload callback request is sent. Replace the IP address and port number with your actual information.
 //        String callbackUrl = "http://88.88.88.88:8888";
         String format = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        String dir = format + "/"; // Specify the prefix for the name of the object to be uploaded.
+        String dir = format; // Specify the prefix for the name of the object to be uploaded. + "/"
 
 //        // Create an OSSClient instance.
 //        OSS ossClient = new OSSClientBuilder().build(endpoint, accessId, accessKey);
