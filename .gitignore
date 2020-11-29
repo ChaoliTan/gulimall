@@ -22,3 +22,4 @@ buildNumber.properties
 
 **/.gitignore
 
+/gulimall-search/gulimall-search.iml
