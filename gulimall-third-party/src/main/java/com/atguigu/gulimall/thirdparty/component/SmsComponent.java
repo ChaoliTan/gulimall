@@ -36,7 +36,7 @@ public class SmsComponent {
         Map<String, String> bodys = new HashMap<String, String>();
         bodys.put("callbackUrl", "http://test.dev.esandcloud.com");
         bodys.put("channel", "0");
-        bodys.put("mobileSet", phone);
+        bodys.put("mobileSet", "[86" + phone + "]");
         bodys.put("templateID", templateId);
         bodys.put("templateParamSet", "['" + code + "', '1']");  // ['1000', '1']
 

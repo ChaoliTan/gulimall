@@ -28,8 +28,10 @@ public class SmsSendController {
     public R sendCode(@RequestParam("phone") String phone, @RequestParam("code") String code) {
 
         //发送验证码
-//        smsComponent.sendCode(phone,code);
-        System.out.println(phone + "code" + code);
+        System.out.println("phone: " + phone + " ,code: " + code);
+//        phone = "15952008322";
+//        code = "22222";
+        smsComponent.sendSmaCode(phone,code);
         return R.ok();
     }
 

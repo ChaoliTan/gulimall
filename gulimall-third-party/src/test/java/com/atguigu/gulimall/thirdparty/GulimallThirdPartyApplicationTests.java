@@ -25,7 +25,11 @@ class GulimallThirdPartyApplicationTests {
 
     @Test
     public void testSendCode() {
-        smsComponent.sendSmaCode("[17785221216]", "5678");
+        String phone = "15952008322";
+        String code = "11111";
+//        smsComponent.sendSmaCode("15952008322", "567890");
+
+        smsComponent.sendSmaCode(phone, code);
     }
 
     @Test
