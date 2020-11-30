@@ -8,6 +8,7 @@ package com.atguigu.common.exception;
  * 错误码列表：
  *  10: 通用
  *      001：参数格式校验
+ *      002：
  *  11: 商品
  *  12: 订单
  *  13: 购物车
@@ -18,6 +19,8 @@ package com.atguigu.common.exception;
 public enum BizCodeEnume {
     UNKNOW_EXCEPTION(10000,"系统未知异常"),
     VAILD_EXCEPTION(10001,"参数格式校验失败"),
+    TO_MANY_REQUEST(10002,"请求流量过大，请稍后再试"),
+    SMS_CODE_EXCEPTION(10003,"验证码获取频率太高，请稍后再试"),
     PRODUCT_UP_EXCEPTION(11000,"商品上架异常");
 
     private int code;
