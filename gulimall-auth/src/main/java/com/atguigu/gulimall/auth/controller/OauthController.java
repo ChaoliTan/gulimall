@@ -6,7 +6,7 @@ import com.atguigu.common.constant.AuthServerConstant;
 import com.atguigu.common.utils.HttpUtils;
 import com.atguigu.common.utils.R;
 import com.atguigu.gulimall.auth.feign.MemberFeignService;
-import com.atguigu.gulimall.auth.vo.MemberResponseVo;
+import com.atguigu.common.vo.MemberResponseVo;
 import com.atguigu.gulimall.auth.vo.SocialUser;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
@@ -48,6 +48,8 @@ public class OauthController {
                 MemberResponseVo memberResponseVo = JSON.parseObject(jsonString, new TypeReference<MemberResponseVo>() {
                 });
                 System.out.println("----------------" + memberResponseVo);
+                // TODO 1. parent domain name
+                // TODO 2. json format to redis
                 session.setAttribute(AuthServerConstant.LOGIN_USER, memberResponseVo);
                 return "redirect:http://gulimall.com";
             } else {
