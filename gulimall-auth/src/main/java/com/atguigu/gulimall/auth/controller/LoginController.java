@@ -1,8 +1,11 @@
 package com.atguigu.gulimall.auth.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.atguigu.common.constant.AuthServerConstant;
 import com.atguigu.common.exception.BizCodeEnume;
 import com.atguigu.common.utils.R;
+import com.atguigu.common.vo.MemberResponseVo;
 import com.atguigu.gulimall.auth.feign.MemberFeignService;
 import com.atguigu.gulimall.auth.feign.ThirdPartFeignService;
 import com.atguigu.gulimall.auth.vo.UserLoginVo;
@@ -33,6 +36,15 @@ public class LoginController {
 
     @Autowired
     MemberFeignService memberFeignService;
+
+    @RequestMapping("/login.html")
+    public String loginPage(HttpSession session) {
+        if (session.getAttribute(AuthServerConstant.LOGIN_USER) != null) {
+            return "redirect:http://gulimall.com/";
+        }else {
+            return "login";
+        }
+    }
 
     @GetMapping("/sms/sendCode")
     @ResponseBody
@@ -119,10 +131,10 @@ public class LoginController {
     public String login(UserLoginVo vo, RedirectAttributes attributes, HttpSession session){
         R r = memberFeignService.login(vo);
         if (r.getCode() == 0) {
-//            String jsonString = JSON.toJSONString(r.get("memberEntity"));
-//            MemberResponseVo memberResponseVo = JSON.parseObject(jsonString, new TypeReference<MemberResponseVo>() {
-//            });
-//            session.setAttribute(AuthServerConstant.LOGIN_USER, memberResponseVo);
+            String jsonString = JSON.toJSONString(r.get("memberEntity"));
+            MemberResponseVo memberResponseVo = JSON.parseObject(jsonString, new TypeReference<MemberResponseVo>() {
+            });
+            session.setAttribute(AuthServerConstant.LOGIN_USER, memberResponseVo);
             return "redirect:http://gulimall.com/";
         }else {
             String msg = (String) r.get("msg");
