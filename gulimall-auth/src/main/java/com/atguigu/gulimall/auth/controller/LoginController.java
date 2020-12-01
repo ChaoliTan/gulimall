@@ -5,6 +5,7 @@ import com.atguigu.common.exception.BizCodeEnume;
 import com.atguigu.common.utils.R;
 import com.atguigu.gulimall.auth.feign.MemberFeignService;
 import com.atguigu.gulimall.auth.feign.ThirdPartFeignService;
+import com.atguigu.gulimall.auth.vo.UserLoginVo;
 import com.atguigu.gulimall.auth.vo.UserRegisterVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -12,12 +13,10 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -99,7 +98,6 @@ public class LoginController {
                 R r = memberFeignService.register(registerVo);
                 if (r.getCode() == 0) {
                     //调用成功，重定向登录页
-                    System.out.println("hhh");
                     return "redirect:http://auth.gulimall.com/login.html";
                 } else {
                     //调用失败，返回注册页并显示错误信息
@@ -115,5 +113,24 @@ public class LoginController {
                 return "redirect:http://auth.gulimall.com/register.html";
             }
         }
+    }
+
+    @RequestMapping("/login")
+    public String login(UserLoginVo vo, RedirectAttributes attributes, HttpSession session){
+        R r = memberFeignService.login(vo);
+        if (r.getCode() == 0) {
+//            String jsonString = JSON.toJSONString(r.get("memberEntity"));
+//            MemberResponseVo memberResponseVo = JSON.parseObject(jsonString, new TypeReference<MemberResponseVo>() {
+//            });
+//            session.setAttribute(AuthServerConstant.LOGIN_USER, memberResponseVo);
+            return "redirect:http://gulimall.com/";
+        }else {
+            String msg = (String) r.get("msg");
+            Map<String, String> errors = new HashMap<>();
+            errors.put("msg", msg);
+            attributes.addFlashAttribute("errors", errors);
+            return "redirect:http://auth.gulimall.com/login.html";
+        }
+
     }
 }

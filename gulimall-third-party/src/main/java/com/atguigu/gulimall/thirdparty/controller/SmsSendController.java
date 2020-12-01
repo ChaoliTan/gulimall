@@ -29,9 +29,7 @@ public class SmsSendController {
 
         //发送验证码
         System.out.println("phone: " + phone + " ,code: " + code);
-//        phone = "15952008322";
-//        code = "22222";
-        smsComponent.sendSmaCode(phone,code);
+//        smsComponent.sendSmaCode(phone,code);
         return R.ok();
     }
 
