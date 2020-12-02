@@ -17,7 +17,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
  *          3）以后获取session。 request.getSession();
  *          4) wrappedRequest.getSession(); ->>> SessionRepository中获取的
  *
- *
+ *      自动续期，设有过期时间
  *
  */
 
