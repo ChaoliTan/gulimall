@@ -58,8 +58,8 @@
 						</ul>
 						<ul class="header_ul_right">
 							<li style="border: 0;">
-								<a href="http://gulimall.com/login.html" th:if="${session.loginUser==null}" class="aa">你好，请登录</a>
-								<a th:else class="aa" style="width: 300px">[[${session.loginUser.nickname}]]</a>
+								<a href="http://auth.gulimall.com/login.html" th:if="${session.loginUser==null}" class="aa">你好，请登录</a>
+								<a th:if="${session.loginUser!=null}" class="aa" style="width: 300px">[[${session.loginUser.nickname}]]</a>
 							</li>
 							<li>
 								<a href="http://auth.gulimall.com/register.html" th:if="${session.loginUser==null}" style="color: red;">免费注册</a> |
@@ -614,7 +614,7 @@
 
 						<div class="box-btns clear">
 							<div class="box-btns-one">
-								<input type="text" name="" id="" value="1" />
+								<input type="text" name="" id="productNum" value="1" />
 								<div class="box-btns-one1">
 
 									<div>
@@ -631,8 +631,8 @@
 								</div>
 							</div>
 							<div class="box-btns-two">
-								<a href="/static/item/../商品分类\index.html">
-									立即预约
+								<a href="#" id="addCartItem" th:attr="skuId=${item.info.skuId}">
+									加入购物车
 								</a>
 							</div>
 							<div class="box-btns-three">
@@ -1244,6 +1244,15 @@
 	<script src="/static/item/js/jquery1.9.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/static/item/js/js.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
+
+		$("#addCartItem").click(function () {
+			let skuId = $(this).attr("skuId");
+			let num = $("#productNum").val();
+			location.href = "http://cart.gulimall.com/addCartItem?skuId=" + skuId + "&num=" + num;
+			return false;
+		});
+
+
 	</script>
 
 </html>

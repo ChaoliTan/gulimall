@@ -19,6 +19,9 @@
         where pki.spu_id=#{spuId}
         group by pssav.attr_id,pssav.attr_name
     </select>
+    <select id="getSkuSaleAttrValuesAsString" resultType="java.lang.String">
+        SELECT attr_value FROM pms_sku_sale_attr_value WHERE sku_id=#{skuId}
+    </select>
 
 
 </mapper>
