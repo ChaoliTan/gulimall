@@ -12,11 +12,11 @@ import java.util.concurrent.TimeUnit;
 @EnableConfigurationProperties(ThreadPoolConfigProperties.class)
 public class MyThreadPoolConfig {
     @Bean
-    public ThreadPoolExecutor threadPoolExecutor(ThreadPoolConfigProperties properties) {
+    public ThreadPoolExecutor threadPoolExecutor(ThreadPoolConfigProperties threadPoolConfigProperties) {
         return new ThreadPoolExecutor(
-                properties.getCorePoolSize(),
-                properties.getMaxPoolSize(),
-                properties.getKeepAliveTime(),
+                threadPoolConfigProperties.getCorePoolSize(),
+                threadPoolConfigProperties.getMaxPoolSize(),
+                threadPoolConfigProperties.getKeepAliveTime(),
                 TimeUnit.SECONDS,
                 new LinkedBlockingDeque<>(10000),
                 new ThreadPoolExecutor.AbortPolicy()

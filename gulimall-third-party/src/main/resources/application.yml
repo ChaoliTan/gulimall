@@ -10,7 +10,7 @@ spring:
         template-id: "0000000"
         template-param-set: "['7788', '10']"
 
-  #    alicloud:
+#    alicloud:
 #      access-key:
 #      secret-key:
 #      oss:
@@ -21,4 +21,4 @@ spring:
     name: gulimall-third-party
 
 server:
-  port: 30000
+  port: 13000

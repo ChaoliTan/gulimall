@@ -80,8 +80,11 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
     /**
      * //TODO 高级部分完善
+     * @GlobalTransactional
+     * suitable to using seata AT mode
      * @param vo
      */
+
     @Transactional
     @Override
     public void saveSpuInfo(SpuSaveVo vo) {
@@ -328,6 +331,15 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
              * 3。 执行请求会有重试机制
              */
         }
+    }
+
+    @Override
+    public SpuInfoEntity getSpuBySkuId(Long skuId) {
+        SkuInfoEntity skuInfoEntity = skuInfoService.getById(skuId);
+        SpuInfoEntity spu = this.getById(skuInfoEntity.getSpuId());
+        BrandEntity brandEntity = brandService.getById(spu.getBrandId());
+        spu.setBrandName(brandEntity.getName());
+        return spu;
     }
 
 

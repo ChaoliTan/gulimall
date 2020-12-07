@@ -2,15 +2,6 @@ spring:
   cloud:
     gateway:
       routes:
-#        - id: test_route
-#          uri: https://www.google.com/
-#          predicates:
-#          - Query=url,google
-#        - id: qq_route
-#          uri: https://www.twitter.com
-#          predicates:
-#            - Query=url, twitter
-
         - id: product_route
           uri: lb://gulimall-product
           predicates:
@@ -66,7 +57,10 @@ spring:
           predicates:
             - Host=cart.gulimall.com
 
-
+        - id: gulimall_order_route
+          uri: lb://gulimall-order
+          predicates:
+            - Host=order.gulimall.com
 
 ## 前端项目，/api
 ## http://localhost:88/api/captcha.jpg   http://localhost:8080/renren-fast/captcha.jpg

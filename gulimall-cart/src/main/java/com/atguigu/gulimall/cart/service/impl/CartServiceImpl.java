@@ -18,6 +18,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -149,12 +150,18 @@ public class CartServiceImpl implements CartService {
         ops.delete(skuId.toString());
     }
 
-//    @Override
-//    public List<CartItemVo> getCheckedItems() {
-//        UserInfoTo userInfoTo = CartInterceptor.threadLocal.get();
-//        List<CartItemVo> cartByKey = getCartByKey(userInfoTo.getUserId().toString());
-//        return cartByKey.stream().filter(CartItemVo::getCheck).collect(Collectors.toList());
-//    }
+    @Override
+    public List<CartItemVo> getCheckedItems() {
+        UserInfoTo userInfoTo = CartInterceptor.threadLocal.get();
+        List<CartItemVo> cartByKey = getCartByKey(userInfoTo.getUserId().toString());
+        return cartByKey.stream().filter(CartItemVo::getCheck).map(item -> {
+            R price = productFeignService.getPrice(item.getSkuId());
+            // TODO 1. Update to latest price
+            String data = (String) price.get("data");
+            item.setPrice(new BigDecimal(data));
+            return item;
+        }).collect(Collectors.toList());
+    }
 
     private List<CartItemVo> getCartByKey(String userKey) {
         BoundHashOperations<String, Object, Object> ops = redisTemplate.boundHashOps(CartConstant.CART_PREFIX+userKey);
