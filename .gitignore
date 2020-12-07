@@ -23,3 +23,5 @@ buildNumber.properties
 **/.gitignore
 
 /gulimall-search/gulimall-search.iml
+/gulimall-common/gulimall-common.iml
+/gulimall-third-party/src/main/resources/application.properties
