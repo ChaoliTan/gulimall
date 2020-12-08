@@ -232,6 +232,11 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
         }
     }
 
+    /**
+     * 防止订单服务卡顿，导致订单状态一直改不了，库存消息优先到期。
+     * 导致卡顿的订单，一直无法解锁库存
+     * @param orderTo
+     */
     @Override
     public void unlock(OrderTo orderTo) {
         //为防止重复解锁，需要重新查询工作单

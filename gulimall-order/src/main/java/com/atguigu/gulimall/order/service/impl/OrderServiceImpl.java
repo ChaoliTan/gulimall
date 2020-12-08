@@ -4,6 +4,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.atguigu.common.constant.CartConstant;
 import com.atguigu.common.exception.NoStockException;
 import com.atguigu.common.to.SkuHasStockVo;
+import com.atguigu.common.to.mq.OrderTo;
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.common.utils.Query;
 import com.atguigu.common.utils.R;
@@ -28,6 +29,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -177,6 +179,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 //                        throw new RuntimeException();
 //                    }
 
+
                     responseVo.setOrder(order.getOrder());
                     responseVo.setCode(0);
 
@@ -208,6 +211,30 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         OrderEntity order_sn = this.getOne(new QueryWrapper<OrderEntity>().eq("order_sn", orderSn));
 
         return order_sn;
+    }
+
+    /**
+     * 关闭过期的的订单
+     * @param orderEntity
+     */
+    @Override
+    public void closeOrder(OrderEntity orderEntity) {
+        //因为消息发送过来的订单已经是很久前的了，中间可能被改动，因此要查询最新的订单
+        OrderEntity newOrderEntity = this.getById(orderEntity.getId());
+        //如果订单还处于新创建的状态，说明超时未支付，进行关单
+        if (newOrderEntity.getStatus() == OrderStatusEnum.CREATE_NEW.getCode()) {
+            OrderEntity updateOrder = new OrderEntity();
+            updateOrder.setId(newOrderEntity.getId());
+            updateOrder.setStatus(OrderStatusEnum.CANCLED.getCode());
+            this.updateById(updateOrder);
+
+            //关单后发送消息通知其他服务进行关单相关的操作，如解锁库存
+            OrderTo orderTo = new OrderTo();
+            BeanUtils.copyProperties(newOrderEntity, orderTo);
+            // TODO Ensure message sent out 100%, 每一个消息都可以做好日志记录（给数据库保存每一个消息的详细信息）
+            // TODO 定期扫描数据库将失败的消息再发送一次
+            rabbitTemplate.convertAndSend("order-event-exchange", "order.release.other",orderTo);
+        }
     }
 
     private void saveOrder(OrderCreateTo orderCreateTo) {

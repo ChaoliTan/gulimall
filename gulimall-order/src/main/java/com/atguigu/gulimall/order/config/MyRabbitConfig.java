@@ -1,9 +1,6 @@
 package com.atguigu.gulimall.order.config;
 
-import com.atguigu.gulimall.order.entity.OrderEntity;
-import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -13,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
 
 @Configuration
 public class MyRabbitConfig {
@@ -21,11 +17,18 @@ public class MyRabbitConfig {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
-    @RabbitListener(queues = "order.release.order.queue")
-    public void listener(OrderEntity entity, Channel channel, Message message) throws IOException {
-        System.out.println("Close expired order:" + entity.getOrderSn());
-        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
-    }
+//    /**
+//     *
+//     * @param entity
+//     * @param channel
+//     * @param message
+//     * @throws IOException
+//     */
+//    @RabbitListener(queues = "order.release.order.queue")
+//    public void listener(OrderEntity entity, Channel channel, Message message) throws IOException {
+//        System.out.println("Close expired order:" + entity.getOrderSn());
+//        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+//    }
 
     @Bean
     public MessageConverter messageConverter(){
@@ -78,7 +81,7 @@ public class MyRabbitConfig {
              */
             @Override
             public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
-
+                // 如果收到此消息，说明broker收到消息，但是没有存到exchange
                 System.out.println("Failed msg: " + message + " replyCode " + replyCode );
             }
         };
