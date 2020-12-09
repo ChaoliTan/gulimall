@@ -10,9 +10,11 @@ import com.atguigu.common.utils.Query;
 import com.atguigu.common.utils.R;
 import com.atguigu.common.vo.MemberResponseVo;
 import com.atguigu.gulimall.order.constant.OrderConstant;
+import com.atguigu.gulimall.order.constant.PayConstant;
 import com.atguigu.gulimall.order.dao.OrderDao;
 import com.atguigu.gulimall.order.entity.OrderEntity;
 import com.atguigu.gulimall.order.entity.OrderItemEntity;
+import com.atguigu.gulimall.order.entity.PaymentInfoEntity;
 import com.atguigu.gulimall.order.enume.OrderStatusEnum;
 import com.atguigu.gulimall.order.feign.CartFeignService;
 import com.atguigu.gulimall.order.feign.MemberFeignService;
@@ -21,6 +23,7 @@ import com.atguigu.gulimall.order.feign.WareFeignService;
 import com.atguigu.gulimall.order.interceptor.LoginInterceptor;
 import com.atguigu.gulimall.order.service.OrderItemService;
 import com.atguigu.gulimall.order.service.OrderService;
+import com.atguigu.gulimall.order.service.PaymentInfoService;
 import com.atguigu.gulimall.order.to.OrderCreateTo;
 import com.atguigu.gulimall.order.to.SpuInfoTo;
 import com.atguigu.gulimall.order.vo.*;
@@ -77,6 +80,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
 
     @Autowired
     RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private PaymentInfoService paymentInfoService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -234,6 +240,41 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
             // TODO Ensure message sent out 100%, 每一个消息都可以做好日志记录（给数据库保存每一个消息的详细信息）
             // TODO 定期扫描数据库将失败的消息再发送一次
             rabbitTemplate.convertAndSend("order-event-exchange", "order.release.other",orderTo);
+        }
+    }
+
+    @Override
+    public PayVo getOrderPay(String orderSn) {
+        OrderEntity orderEntity = this.getOne(new QueryWrapper<OrderEntity>().eq("order_sn", orderSn));
+        PayVo payVo = new PayVo();
+        payVo.setOut_trade_no(orderSn);
+        BigDecimal payAmount = orderEntity.getPayAmount().setScale(2, BigDecimal.ROUND_UP);
+        payVo.setTotal_amount(payAmount.toString());
+
+        List<OrderItemEntity> orderItemEntities = orderItemService.list(new QueryWrapper<OrderItemEntity>().eq("order_sn", orderSn));
+        OrderItemEntity orderItemEntity = orderItemEntities.get(0);
+        payVo.setSubject(orderItemEntity.getSkuName());
+        payVo.setBody(orderItemEntity.getSkuAttrsVals());
+        return payVo;
+    }
+
+    @Override
+    public void handlerPayResult(PayAsyncVo payAsyncVo) {
+        //保存交易流水
+        PaymentInfoEntity infoEntity = new PaymentInfoEntity();
+        String orderSn = payAsyncVo.getOut_trade_no();
+        infoEntity.setOrderSn(orderSn);
+        infoEntity.setAlipayTradeNo(payAsyncVo.getTrade_no());
+        infoEntity.setSubject(payAsyncVo.getSubject());
+        String trade_status = payAsyncVo.getTrade_status();
+        infoEntity.setPaymentStatus(trade_status);
+        infoEntity.setCreateTime(new Date());
+        infoEntity.setCallbackTime(payAsyncVo.getNotify_time());
+        paymentInfoService.save(infoEntity);
+
+        //判断交易状态是否成功
+        if (trade_status.equals("TRADE_SUCCESS") || trade_status.equals("TRADE_FINISHED")) {
+            baseMapper.updateOrderStatus(orderSn, OrderStatusEnum.PAYED.getCode(), PayConstant.ALIPAY);
         }
     }
 
