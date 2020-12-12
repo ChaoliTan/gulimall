@@ -20,6 +20,15 @@
     </properties>
 
     <dependencies>
+        <!--链路追踪-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-sleuth</artifactId>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
         <!--        mybatis-plus-->
         <dependency>
             <groupId>com.baomidou</groupId>

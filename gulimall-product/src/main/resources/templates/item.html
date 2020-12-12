@@ -645,7 +645,7 @@
 
 					<div class="box-btns-two"
 						 th:if="${item.seckillSkuVo == null }">
-						<a class="addToCart" href="http://cart.gulimall.com/addToCart" th:attr="skuId=${item.info.skuId}">
+						<a class="addCartItem" href="http://cart.gulimall.com/addToCart" th:attr="skuId=${item.info.skuId}">
 							加入购物车
 						</a>
 					</div>
@@ -1268,7 +1268,7 @@
 <script charset="utf-8" src="/static/item/js/js.js" type="text/javascript"></script>
 <script type="text/javascript">
 
-    $("#addCartItem").click(function () {
+    $(".addCartItem").click(function () {
         let skuId = $(this).attr("skuId");
         let num = $("#productNum").val();
         location.href = "http://cart.gulimall.com/addCartItem?skuId=" + skuId + "&num=" + num;
