@@ -14,6 +14,9 @@ import javax.annotation.PostConstruct;
 @Configuration
 public class MyRabbitConfig {
 
+    /**
+     * 如果一个类只有一个有参构造器，它的参数就会从Bean容器中得到
+     */
     @Autowired
     RabbitTemplate rabbitTemplate;
 

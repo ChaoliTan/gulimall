@@ -1,12 +1,16 @@
 package com.atguigu.gulimall.product.service.impl;
 
+import com.alibaba.fastjson.TypeReference;
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.common.utils.Query;
+import com.atguigu.common.utils.R;
 import com.atguigu.gulimall.product.dao.SkuInfoDao;
 import com.atguigu.gulimall.product.entity.SkuImagesEntity;
 import com.atguigu.gulimall.product.entity.SkuInfoEntity;
 import com.atguigu.gulimall.product.entity.SpuInfoDescEntity;
+import com.atguigu.gulimall.product.feign.SeckillFeignService;
 import com.atguigu.gulimall.product.service.*;
+import com.atguigu.gulimall.product.vo.SeckillSkuVo;
 import com.atguigu.gulimall.product.vo.SkuItemSaleAttrVo;
 import com.atguigu.gulimall.product.vo.SkuItemVo;
 import com.atguigu.gulimall.product.vo.SpuItemAttrGroupVo;
@@ -42,6 +46,9 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
 
     @Autowired
     ThreadPoolExecutor executor;
+
+    @Autowired
+    SeckillFeignService seckillFeignService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -158,8 +165,22 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
             skuItemVo.setImages(skuImagesEntities);
         }, executor);
 
+        //6、秒杀商品的优惠信息
+        CompletableFuture<Void> seckFuture = CompletableFuture.runAsync(() -> {
+            R r = seckillFeignService.getSeckillSkuInfo(skuId);
+            if (r.getCode() == 0) {
+                SeckillSkuVo seckillSkuVo = r.getData(new TypeReference<SeckillSkuVo>() {
+                });
+                long current = System.currentTimeMillis();
+                //如果返回结果不为空且活动未过期，设置秒杀信息
+                if (seckillSkuVo != null&&current<seckillSkuVo.getEndTime()) {
+                    skuItemVo.setSeckillSkuVo(seckillSkuVo);
+                }
+            }
+        }, executor);
+
         // 等待所有任务
-        CompletableFuture.allOf(saleAttrFuture, descpFuture, baseAttrFuture, imgFuture).get();
+        CompletableFuture.allOf(saleAttrFuture, descpFuture, baseAttrFuture, imgFuture, seckFuture).get();
 
         return skuItemVo;
     }

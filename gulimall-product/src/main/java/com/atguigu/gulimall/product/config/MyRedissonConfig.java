@@ -22,7 +22,7 @@ public class MyRedissonConfig {
         Config config = new Config();
 //        config.useClusterServers()
 //              .addNodeAddress("redis://127.0.0.1:7004", "redis://127.0.0.1:7001");
-        config.useSingleServer().setAddress("redis://10.0.0.23:6379");
+        config.useSingleServer().setAddress("redis://127.0.0.1:6379");
         // 2。 根据Config创建出RedissonClient实例
         return Redisson.create(config);
     }

@@ -4,7 +4,7 @@
 ## Steps to start project
 
 ```shell
-1. Start nacos
+1. Start Nacos and Sentinel
 2. Start docker (Already set up auto start for: MySQL, ElasticSearch, Kibana, Nginx, Redis, RabbitMQ)
 3. Start idea
 4. Run corresponding service.
