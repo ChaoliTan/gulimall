@@ -8,7 +8,7 @@
 
 A practice project to build a online shopping mall. It has the following interface
 
-![home](/Eno/gulimall/docs/img/home.png)
+![home](docs/img/home.png)
 
 
 
@@ -16,7 +16,7 @@ The architecture of this project is shown below.
 
 
 
-![谷粒商城-微服务架构图](/Eno/gulimall/docs/img/谷粒商城-微服务架构图.jpg)
+![谷粒商城-微服务架构图](docs/img/谷粒商城-微服务架构图.jpg)
 
 
 
