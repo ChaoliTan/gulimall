@@ -1,6 +1,25 @@
 # Gulimall Online Shopping Mall (Distributed System)
 
 
+
+## Introduction
+
+
+
+A practice project to build a online shopping mall. It has the following interface
+
+![home](/Eno/gulimall/docs/img/home.png)
+
+
+
+The architecture of this project is shown below.
+
+
+
+![谷粒商城-微服务架构图](/Eno/gulimall/docs/img/谷粒商城-微服务架构图.jpg)
+
+
+
 ## Steps to start project
 
 ```shell
@@ -9,6 +28,9 @@
 3. Start idea
 4. Run corresponding service.
 ```
+
+
+
 
 
 ## Summary for the fundamental part
@@ -35,60 +57,43 @@
 　　　  Lombok：@Data、@Slf4j
 
 
-## Advanced Part
 
+## Summary for Advanced Part
 
-### 1. gulimall-search (Elasticsearch)
-1. 
+List some framework, middleware, tools using in this part.
 
-
-### 2. Render Engine (Thymeleaf)
-1.
-
-
-### 3. Stress Test (JMeter)
-1. 
-
-
-
-### 4. Performance Listener (jconsole vs jvisualvm)
-1.  
-
- 
-### 5. Dynamic and static separation （Nginx)
-1. 
-
-### 6. Cache Middleware
-1. Redis
-2. Redisson Lock
-3. consistency between cache and database
-	a. dual write (Write Back)
-	b. Cache Aside
-	c. Write Through
-
-
-
-### 7. Spring Cache
-
-
-### 8. Asynchronous & ThreadPool
-
-### 9. Socail Login & SSO
-1.  OAuth2.0
-
-
-### 10. Spring Session
-
-### 11. RabbitMQ
+1. Elasticsearch
+2. Render Engine
+   1. Thymeleaf
+3. Stress Test
+   1. JMeter
+4. Performance Listener
+   1. jconsole vs jvisualvm
+5. Dynamic and static separation
+   1. Nginx
+6. Cache Middleware
+   1. Redis
+   2. Redisson Lock
+   3. consistency between cache and database
+      a. dual write (Write Back)
+      b. Cache Aside
+      c. Write Through
+   4. Spring Cache
+7. Asynchronous & ThreadPool
+8. Socail Login & SSO
+   1. OAuth2.0
+9. Spring Session
+10. RabbitMQ
+11. Cron Task
+12. Alicloud Sentinel
+13. Spring Cloud Sleuth & Zipkin
+14. Interface idempotence
+15. Third Party function
+    1. Alipay payment
+    2. Alicloud Send Sms (Short Message Service) API
+    3. Weibo Sign In
 
 
 
 
-
-
-
-
-## Summary for the advanced part
-
-
-## Summary for the CLuster part
+## Summary for the Cluster part
