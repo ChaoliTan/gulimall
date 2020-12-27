@@ -1,0 +1,24 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos-service.guilimall:8848
+    alicloud:
+      sms:
+        host: https://intlsms.market.alicloudapi.com
+        path: /comms/sms/groupmessaging
+        template-id: "0000000"
+        template-param-set: "['7788', '10']"
+
+#    alicloud:
+#      access-key:
+#      secret-key:
+#      oss:
+#        endpoint:
+#        bucket:
+
+  application:
+    name: gulimall-third-party
+
+server:
+  port: 8080

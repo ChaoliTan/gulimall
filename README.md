@@ -16,7 +16,7 @@ The architecture of this project is shown below.
 
 
 
-![谷粒商城-微服务架构图](docs/img/谷粒商城-微服务架构图.jpg)
+![谷粒商城-微服务架构图](docs/img/gulimall-MicroserviceArchitecture.png)
 
 
 

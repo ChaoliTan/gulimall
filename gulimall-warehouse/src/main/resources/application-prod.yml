@@ -2,20 +2,28 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://localhost:3306/gulimall_sms
+    url: jdbc:mysql://mysql-master-svc.guilimall:3306/gulimall_wms
     driver-class-name: com.mysql.cj.jdbc.Driver
+
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: nacos-service.guilimall:8848
   application:
-    name: gulimall-coupon
+    name: gulimall-warehouse
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
 
-#mybatis-plus:
+
+mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:
     db-config:
       id-type: auto
-
 server:
-  port: 7000
+  port: 8080
+
+logging:
+  level:
+    com.atguigu: debug
+
