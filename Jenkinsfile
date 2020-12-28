@@ -83,7 +83,7 @@ pipeline {
 
     stage('deploy to dev') {
       when{
-        branch 'master'
+        branch 'main'
       }
       steps {
         input(id: 'deploy-to-dev-$PROJECT_NAME', message: 'deploy $PROJECT_NAME to dev?')
@@ -103,7 +103,7 @@ pipeline {
               withCredentials([usernamePassword(credentialsId: "$GITHUB_CREDENTIAL_ID", passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                 sh 'git config --global user.email "ctan7749@gmail.com" '
                 sh 'git config --global user.name "chaolitan" '
-                sh 'git tag -a $PROJECT_VERSION -m "$PROJECT_VERSION" '
+                sh 'git tag -a $PROJECT_NAME:$PROJECT_VERSION -m "$PROJECT_VERSION" '
                 sh 'git push http://$GIT_USERNAME:$GIT_PASSWORD@github.com/$GITHUB_ACCOUNT/gulimall.git --tags --ipv4'
               }
             sh 'docker tag  $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:SNAPSHOT-$BRANCH_NAME-$BUILD_NUMBER $REGISTRY/$DOCKERHUB_NAMESPACE/$PROJECT_NAME:$PROJECT_VERSION '
