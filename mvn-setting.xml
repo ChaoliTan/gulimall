@@ -33,6 +33,11 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <properties>
+                <sonar.host.url>
+                    http://192.168.56.100:30663
+                </sonar.host.url>
+            </properties>
         </profile>
 
         <profile>
