@@ -7,8 +7,8 @@ pipeline {
   }
 
   parameters {
-      string(name:'PROJECT_VERSION',defaultValue: 'v1.0',description:'')
-      string(name:'PROJECT_NAME',defaultValue: '',description:'')
+      string(name:'PROJECT_VERSION',defaultValue: 'v1.0',description:'project version')
+      string(name:'PROJECT_NAME',defaultValue: 'gulimall-gateway',description:'init default project')
   }
 
   environment {
