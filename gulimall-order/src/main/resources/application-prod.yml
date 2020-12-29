@@ -2,7 +2,7 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://mysql-master-svc.guilimall:3306/gulimall_oms
+    url: jdbc:mysql://mysql-master-svc.gulimall:3306/gulimall_oms
     driver-class-name: com.mysql.cj.jdbc.Driver
   application:
     name: gulimall-order

@@ -2,7 +2,7 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://mysql-master-svc.guilimall:3306/gulimall_pms?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://mysql-master-svc.gulimall:3306/gulimall_pms?useUnicode=true&characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 #    alicloud:

@@ -42,6 +42,9 @@ pipeline {
     }
 
     stage('sonarqube analysis') {
+      when{
+        branch 'master'
+      }
       steps {
         container ('maven') {
           withCredentials([string(credentialsId: "$SONAR_CREDENTIAL_ID", variable: 'SONAR_TOKEN')]) {
